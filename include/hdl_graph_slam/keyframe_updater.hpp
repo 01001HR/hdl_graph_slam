@@ -11,8 +11,6 @@ namespace hdl_graph_slam {
  */
 class KeyframeUpdater {
 public:
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
   /**
    * @brief constructor
    * @param pnh
@@ -25,6 +23,7 @@ public:
     keyframe_delta_angle = pnh.param<double>("keyframe_delta_angle", 2.0);
 
     accum_distance = 0.0;
+      std::cout<<"KeyframeUpdater"<<std::endl;
   }
 
   /**

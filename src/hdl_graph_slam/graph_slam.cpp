@@ -14,6 +14,43 @@
 #include <g2o/edge_se3_priorxy.hpp>
 #include <g2o/edge_se3_priorxyz.hpp>
 
+///////////////////
+#include <signal.h>
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <algorithm>
+#include <cassert>
+#include <Eigen/src/Core/Matrix.h>
+#include <Eigen/Dense>
+
+#include "g2o/config.h"
+#include "g2o/core/estimate_propagator.h"
+#include "g2o/core/sparse_optimizer.h"
+#include "g2o/core/factory.h"
+#include "g2o/core/optimization_algorithm_factory.h"
+#include "g2o/core/hyper_dijkstra.h"
+#include "g2o/core/hyper_graph_action.h"
+#include "g2o/core/batch_stats.h"
+#include "g2o/core/robust_kernel.h"
+#include "g2o/core/robust_kernel_factory.h"
+#include "g2o/core/optimization_algorithm.h"
+#include "g2o/core/sparse_optimizer_terminate_action.h"
+
+#include "g2o/stuff/macros.h"
+#include "g2o/stuff/color_macros.h"
+#include "g2o/stuff/command_args.h"
+#include "g2o/stuff/filesys_tools.h"
+#include "g2o/stuff/string_tools.h"
+#include "g2o/stuff/timeutil.h"
+
+/////////////////
+
+
+
+
 G2O_USE_OPTIMIZATION_LIBRARY(csparse)
 
 namespace g2o {
@@ -34,9 +71,22 @@ GraphSLAM::GraphSLAM() {
   std::cout << "construct solver... " << std::endl;
   g2o::OptimizationAlgorithmFactory* solver_factory = g2o::OptimizationAlgorithmFactory::instance();
   g2o::OptimizationAlgorithmProperty solver_property;
+
+    graph->setVerbose(true);
+
+    solver_factory->listSolvers(std::cout);
+    g2o::Factory::instance()->printRegisteredTypes(std::cout, true);
+    std::vector<std::string> kernels;
+    g2o::RobustKernelFactory::instance()->fillKnownKernels(kernels);
+    std::cout << "Robust Kernels:" << std::endl;
+    for (size_t i = 0; i < kernels.size(); ++i) {
+        std::cout << kernels[i] << std::endl;
+    }
+
+
+
   g2o::OptimizationAlgorithm* solver = solver_factory->construct(g2o_solver_name, solver_property);
   graph->setAlgorithm(solver);
-
   if (!graph->solver()) {
     std::cerr << std::endl;
     std::cerr << "error : failed to allocate solver!!" << std::endl;
@@ -45,17 +95,22 @@ GraphSLAM::GraphSLAM() {
     std::cin.ignore(1);
     return;
   }
-  std::cout << "done" << std::endl;
+    graph->solver()->printProperties(std::cout);
+    std::cout << "done" << std::endl;
 
   floor_plane_node = add_plane_node(Eigen::Vector4d(0.0, 0.0, 1.0, 0.0));
-  floor_plane_node->setFixed(true);
-}
+        std::cout << "done1" << std::endl;
+
+        floor_plane_node->setFixed(true);
+        std::cout << "done2" << std::endl;
+
+    }
 
 /**
  * @brief destructor
  */
 GraphSLAM::~GraphSLAM() {
-  graph.reset();
+  //graph.reset();
 }
 
 

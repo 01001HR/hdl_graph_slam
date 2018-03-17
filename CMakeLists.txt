@@ -7,14 +7,23 @@ set(CMAKE_CXX_FLAGS "-std=c++11 -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 # pcl 1.7 causes a segfault when it is built with debug mode
-set(CMAKE_BUILD_TYPE "RELEASE")
+set(CMAKE_BUILD_TYPE "DEBUG")
+
+set(${PROJECT_NAME}_CATKIN_DEPS
+        angles
+        nodelet
+        pcl_ros
+        roscpp
+        roslib
+        sensor_msgs
+        tf
+        dynamic_reconfigure
+        )
 
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  pcl_ros
+  ${${PROJECT_NAME}_CATKIN_DEPS}
   geodesy
   nmea_msgs
-  sensor_msgs
   message_generation
   ndt_omp
 )
@@ -69,6 +78,52 @@ include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
+
+# nodes
+add_executable(prefiltering_node apps/prefiltering_node.cpp)
+target_link_libraries(prefiltering_node
+        ${catkin_LIBRARIES}
+        ${PCL_LIBRARIES}
+        )
+
+
+add_executable(floor_detection_node apps/floor_detection_node.cpp)
+target_link_libraries(floor_detection_node
+        ${catkin_LIBRARIES}
+        ${PCL_LIBRARIES}
+        )
+add_dependencies(floor_detection_node ${PROJECT_NAME}_gencpp)
+
+
+add_executable(scan_matching_odometry_node
+        apps/scan_matching_odometry_node.cpp
+        src/hdl_graph_slam/registrations.cpp
+        )
+target_link_libraries(scan_matching_odometry_node
+        ${catkin_LIBRARIES}
+        ${PCL_LIBRARIES}
+        )
+
+add_executable(hdl_graph_slam_node
+        apps/hdl_graph_slam_node.cpp
+        src/hdl_graph_slam/graph_slam.cpp
+        src/hdl_graph_slam/keyframe.cpp
+        src/hdl_graph_slam/map_cloud_generator.cpp
+        src/hdl_graph_slam/registrations.cpp
+        src/hdl_graph_slam/information_matrix_calculator.cpp
+        )
+target_link_libraries(hdl_graph_slam_node
+        ${catkin_LIBRARIES}
+        ${PCL_LIBRARIES}
+        ${G2O_TYPES_DATA}
+        ${G2O_CORE_LIBRARY}
+        ${G2O_STUFF_LIBRARY}
+        ${G2O_SOLVER_PCG}
+        ${G2O_SOLVER_CSPARSE}
+        ${G2O_TYPES_SLAM3D}
+        ${G2O_TYPES_SLAM3D_ADDONS}
+        )
+add_dependencies(hdl_graph_slam_node ${PROJECT_NAME}_gencpp)
 
 # nodelets
 add_library(prefiltering_nodelet apps/prefiltering_nodelet.cpp)

@@ -15,27 +15,18 @@
 #include <pcl/filters/statistical_outlier_removal.h>
 
 #include "prefiltering.cpp"
-namespace hdl_graph_slam {
 
-class PrefilteringNodelet : public nodelet::Nodelet {
-public:
-  typedef pcl::PointXYZI PointT;
+int main(int argc, char** argv)
+{
+    ros::init(argc, argv, "PrefilteringNode");
+    ros::NodeHandle node;
+    ros::NodeHandle priv_nh("~");
 
-  PrefilteringNodelet() {}
-  ~PrefilteringNodelet() {}
+    hdl_graph_slam::Prefiltering prefilter(node, priv_nh);
 
+    // handle callbacks until shut down
+    ros::spin();
 
-private:
-    virtual void onInit()
-    {
-        prefilter.reset(new Prefiltering(getNodeHandle(), getPrivateNodeHandle()));
-    }
+    return 0;
 
-private:
-    boost::shared_ptr<Prefiltering> prefilter;
-
-};
-
-} // namespace hdl_graph_slam
-
-PLUGINLIB_EXPORT_CLASS(hdl_graph_slam::PrefilteringNodelet, nodelet::Nodelet)
+}

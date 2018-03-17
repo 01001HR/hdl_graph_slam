@@ -51,28 +51,19 @@
 #include <g2o/edge_se3_priorxy.hpp>
 #include "hdl_graph_slam.cpp"
 
-namespace hdl_graph_slam {
-
-class HdlGraphSlamNodelet : public nodelet::Nodelet {
-public:
-  HdlGraphSlamNodelet() {
-  }
-  ~HdlGraphSlamNodelet() {
-
-  }
-
-private:
-    virtual void onInit()
-    {
-        graph_slam.reset(new HdlGraphSlam(getNodeHandle(), getPrivateNodeHandle(), getMTNodeHandle()));
-    }
-
-private:
-    boost::shared_ptr<HdlGraphSlam> graph_slam;
-
-};
-
-} // namespace hdl_graph_slam
+int main(int argc, char** argv)
+{
+    ros::init(argc, argv, "HdlGraphSlamNode");
+    ros::NodeHandle node;
+    ros::NodeHandle priv_nh("~");
+    ros::NodeHandle mt_nh("~");
 
 
-PLUGINLIB_EXPORT_CLASS(hdl_graph_slam::HdlGraphSlamNodelet, nodelet::Nodelet)
+    hdl_graph_slam::HdlGraphSlam graph_slam(node, priv_nh, mt_nh);
+
+    // handle callbacks until shut down
+    ros::spin();
+
+    return 0;
+
+}

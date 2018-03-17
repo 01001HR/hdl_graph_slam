@@ -21,26 +21,17 @@
 
 #include "floor_detection.cpp"
 
-namespace hdl_graph_slam {
+int main(int argc, char** argv)
+{
+    ros::init(argc, argv, "FloorDetectionNode");
+    ros::NodeHandle node;
+    ros::NodeHandle priv_nh("~");
 
-    class FloorDetectionNodelet : public nodelet::Nodelet {
-    public:
+    hdl_graph_slam::FloorDetection floor_detection(node, priv_nh);
 
-      FloorDetectionNodelet() {}
-      ~FloorDetectionNodelet() {}
+    // handle callbacks until shut down
+    ros::spin();
 
+    return 0;
 
-    private:
-        virtual void onInit()
-        {
-            floor_detection.reset(new FloorDetection(getNodeHandle(), getPrivateNodeHandle()));
-        }
-
-    private:
-        boost::shared_ptr<FloorDetection> floor_detection;
-
-    };
-
-} // namespace hdl_graph_slam
-
-PLUGINLIB_EXPORT_CLASS(hdl_graph_slam::FloorDetectionNodelet, nodelet::Nodelet)
+}
