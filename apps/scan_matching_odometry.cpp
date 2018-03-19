@@ -27,7 +27,9 @@ namespace hdl_graph_slam {
 class ScanMatchingOdometry {
 public:
   typedef pcl::PointXYZI PointT;
-  ScanMatchingOdometry(ros::NodeHandle nh_, ros::NodeHandle private_nh_) :
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+    ScanMatchingOdometry(ros::NodeHandle nh_, ros::NodeHandle private_nh_) :
           nh(nh_),
           private_nh(private_nh_)
           {

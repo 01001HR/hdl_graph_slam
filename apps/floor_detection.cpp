@@ -24,7 +24,7 @@ namespace hdl_graph_slam {
 class FloorDetection{
 public:
   typedef pcl::PointXYZI PointT;
-
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   FloorDetection(ros::NodeHandle nh_, ros::NodeHandle private_nh_) :
           nh(nh_),
           private_nh(private_nh_)

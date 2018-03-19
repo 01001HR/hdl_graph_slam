@@ -21,7 +21,9 @@ namespace hdl_graph_slam {
 
 class GraphSLAM {
 public:
-  GraphSLAM();
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+    GraphSLAM();
   ~GraphSLAM();
 
   /**

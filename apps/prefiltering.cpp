@@ -19,6 +19,7 @@ namespace hdl_graph_slam {
 class Prefiltering{
 public:
   typedef pcl::PointXYZI PointT;
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
   Prefiltering(ros::NodeHandle nh_, ros::NodeHandle private_nh_) :
           nh(nh_),

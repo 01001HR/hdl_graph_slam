@@ -56,7 +56,7 @@ namespace hdl_graph_slam {
 class HdlGraphSlam{
 public:
   typedef pcl::PointXYZI PointT;
-
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   HdlGraphSlam(ros::NodeHandle nh_, ros::NodeHandle private_nh_,  ros::NodeHandle mt_nh_) :
           nh(nh_),
           private_nh(private_nh_),
