@@ -29,7 +29,7 @@
 #include <g2o/edge_se3_priorxyz.hpp>
 #include <g2o/edge_se3_plane.hpp>
 #include <g2o/edge_se3_priorxy.hpp>
-#include <g2o/vertex_plane.hpp>
+#include <g2o/plane_vertex.hpp>
 G2O_USE_OPTIMIZATION_LIBRARY(csparse)
 
 using namespace g2o;

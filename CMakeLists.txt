@@ -125,6 +125,18 @@ target_link_libraries(hdl_graph_slam_node
         )
 add_dependencies(hdl_graph_slam_node ${PROJECT_NAME}_gencpp)
 
+add_executable(graph_test apps/graph_test.cpp)
+target_link_libraries(graph_test
+        ${catkin_LIBRARIES}
+        ${G2O_TYPES_DATA}
+        ${G2O_CORE_LIBRARY}
+        ${G2O_STUFF_LIBRARY}
+        ${G2O_SOLVER_PCG}
+        ${G2O_SOLVER_CSPARSE}
+        ${G2O_TYPES_SLAM3D}
+        ${G2O_TYPES_SLAM3D_ADDONS}
+        )
+
 # nodelets
 add_library(prefiltering_nodelet apps/prefiltering_nodelet.cpp)
 target_link_libraries(prefiltering_nodelet
