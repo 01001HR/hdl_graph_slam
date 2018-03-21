@@ -333,13 +333,13 @@ private:
 
       const auto& keyframe = found->second;
 
-      Eigen::Vector4d coeffs(floor_coeffs->coeffs[0], floor_coeffs->coeffs[1], floor_coeffs->coeffs[2], floor_coeffs->coeffs[3]);
-      Eigen::Matrix3d information = Eigen::Matrix3d::Identity() * (1.0 / floor_edge_stddev);
-      graph_slam->add_se3_plane_edge(keyframe->node, graph_slam->floor_plane_node, coeffs, information);
+      //Eigen::Vector4d coeffs(floor_coeffs->coeffs[0], floor_coeffs->coeffs[1], floor_coeffs->coeffs[2], floor_coeffs->coeffs[3]);
+      //Eigen::Matrix3d information = Eigen::Matrix3d::Identity() * (1.0 / floor_edge_stddev);
+      //graph_slam->add_se3_plane_edge(keyframe->node, graph_slam->floor_plane_node, coeffs, information);
 
-      keyframe->floor_coeffs = coeffs;
+      //keyframe->floor_coeffs = coeffs;
 
-      updated = true;
+      //updated = true;
     }
 
     auto remove_loc = std::upper_bound(floor_coeffs_queue.begin(), floor_coeffs_queue.end(), latest_keyframe_stamp,

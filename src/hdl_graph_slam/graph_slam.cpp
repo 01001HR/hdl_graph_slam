@@ -98,11 +98,8 @@ GraphSLAM::GraphSLAM() {
     graph->solver()->printProperties(std::cout);
     std::cout << "done" << std::endl;
 
-  floor_plane_node = add_plane_node(Eigen::Vector4d(0.0, 0.0, 1.0, 0.0));
-        std::cout << "done1" << std::endl;
-
-        floor_plane_node->setFixed(true);
-        std::cout << "done2" << std::endl;
+    //floor_plane_node = add_plane_node(Eigen::Vector4d(0.0, 0.0, 1.0, 0.0));
+    //floor_plane_node->setFixed(true);
 
     }
 
@@ -123,6 +120,7 @@ g2o::VertexSE3* GraphSLAM::add_se3_node(const Eigen::Isometry3d& pose) {
   return vertex;
 }
 
+/*
 g2o::VertexPlane* GraphSLAM::add_plane_node(const Eigen::Vector4d& plane_coeffs) {
   g2o::VertexPlane* vertex(new g2o::VertexPlane());
   vertex->setId(graph->vertices().size());
@@ -130,7 +128,7 @@ g2o::VertexPlane* GraphSLAM::add_plane_node(const Eigen::Vector4d& plane_coeffs)
   graph->addVertex(vertex);
 
   return vertex;
-}
+}*/
 
 g2o::VertexPointXYZ* GraphSLAM::add_point_xyz_node(const Eigen::Vector3d& xyz) {
   g2o::VertexPointXYZ* vertex(new g2o::VertexPointXYZ());
@@ -151,7 +149,7 @@ g2o::EdgeSE3* GraphSLAM::add_se3_edge(g2o::VertexSE3* v1, g2o::VertexSE3* v2, co
 
   return edge;
 }
-
+/*
 g2o::EdgeSE3Plane* GraphSLAM::add_se3_plane_edge(g2o::VertexSE3* v_se3, g2o::VertexPlane* v_plane, const Eigen::Vector4d& plane_coeffs, const Eigen::MatrixXd& information_matrix) {
   g2o::EdgeSE3Plane* edge(new g2o::EdgeSE3Plane());
   edge->setMeasurement(plane_coeffs);
@@ -161,7 +159,7 @@ g2o::EdgeSE3Plane* GraphSLAM::add_se3_plane_edge(g2o::VertexSE3* v_se3, g2o::Ver
   graph->addEdge(edge);
 
   return edge;
-}
+}*/
 
 g2o::EdgeSE3PointXYZ* GraphSLAM::add_se3_point_xyz_edge(g2o::VertexSE3* v_se3, g2o::VertexPointXYZ* v_xyz, const Eigen::Vector3d& xyz, const Eigen::MatrixXd& information_matrix) {
   g2o::EdgeSE3PointXYZ* edge(new g2o::EdgeSE3PointXYZ());

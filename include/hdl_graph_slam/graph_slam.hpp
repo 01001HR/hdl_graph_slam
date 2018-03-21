@@ -38,7 +38,7 @@ public:
    * @param plane_coeffs
    * @return registered node
    */
-  g2o::VertexPlane* add_plane_node(const Eigen::Vector4d& plane_coeffs);
+  //g2o::VertexPlane* add_plane_node(const Eigen::Vector4d& plane_coeffs);
 
   /**
    * @brief add a point_xyz node to the graph
@@ -65,7 +65,7 @@ public:
    * @param information_matrix  information matrix (it must be 3x3)
    * @return registered edge
    */
-  g2o::EdgeSE3Plane* add_se3_plane_edge(g2o::VertexSE3* v_se3, g2o::VertexPlane* v_plane, const Eigen::Vector4d& plane_coeffs, const Eigen::MatrixXd& information_matrix);
+  //g2o::EdgeSE3Plane* add_se3_plane_edge(g2o::VertexSE3* v_se3, g2o::VertexPlane* v_plane, const Eigen::Vector4d& plane_coeffs, const Eigen::MatrixXd& information_matrix);
 
   /**
    * @brief add an edge between an SE3 node and a point_xyz node
@@ -101,7 +101,7 @@ public:
 
 public:
   std::unique_ptr<g2o::SparseOptimizer> graph;  // g2o graph
-  g2o::VertexPlane* floor_plane_node;           // ground floor plane node
+  //g2o::VertexPlane* floor_plane_node;           // ground floor plane node
 };
 
 }
